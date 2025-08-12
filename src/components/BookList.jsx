@@ -14,7 +14,7 @@ export default function BookList() {
         <>
             {loading && <p>Loading...</p>}
             {!!books && (
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
                     {books.map((book) => (
                         <Book book={book} key={book.id}  />
                     ))}
