@@ -14,6 +14,10 @@ export default function Create() {
   const navigate = useNavigate();
 
   let addCategory = () => {
+    if(newCategory && categories.includes(newCategory)){
+      setNewCategory("")
+      return;
+    }
     setCategories(prev => [...prev, newCategory])
     setNewCategory('')
   }

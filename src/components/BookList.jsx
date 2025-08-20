@@ -1,10 +1,17 @@
 import React from 'react'
 import Book from '../components/Book'
 import useFetch from '../hooks/useFetch'
+import { createSearchParams, useLocation } from 'react-router-dom'
 
 export default function BookList() {
 
-    let {data: books, loading, error} = useFetch('http://localhost:3000/books');
+    let location = useLocation();
+    let params = new URLSearchParams(location.search);
+    let search = params.get('q')
+
+    let {data: books, loading, error} = useFetch(`http://localhost:3000/books${search ? `?q=${search}` : ""}`);
+    console.log(books);
+
 
     if(error){
         return <p>{error}</p>
@@ -20,6 +27,7 @@ export default function BookList() {
                     ))}
                 </div>
             )}
+            {!!books && !books.length && <p className="text-center text-xl text-gray-500">No books found</p>}
             
         </>
     )

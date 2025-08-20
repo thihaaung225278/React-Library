@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Link , NavLink } from 'react-router-dom'
+import { Link , NavLink, useNavigate } from 'react-router-dom'
  
 
 export default function Navbar() {
+
+    let [search, setSearch] = useState("");
+    let navigate =useNavigate()
+
+    const handleSearch = (e) => {
+        navigate(`/?q=${search}`)
+    }
+
     return (
         <nav className='border border-b-1 border-b-indigo-600'>
             <ul className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
@@ -13,7 +21,13 @@ export default function Navbar() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
-                    <input type="text" placeholder='Search book ...' className='outline-none' />
+                    <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder='Search book ...' className='outline-none' />
+                    <button onClick={handleSearch} className='text-white bg-indigo-600 py-2 px-2 text-sm rounded-lg cursor-pointer flex items-center gap-2'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        {/* <span className='hidden md:block'>Search</span> */}
+                    </button>
                 </li>
 
                 {/* center */}
