@@ -1,19 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
-import { Link , NavLink, useNavigate } from 'react-router-dom'
- 
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { ThemeContext } from '../contexts/ThemeContext';
+
 
 export default function Navbar() {
 
     let [search, setSearch] = useState("");
-    let navigate =useNavigate()
+    let navigate = useNavigate()
 
     const handleSearch = (e) => {
         navigate(`/?q=${search}`)
     }
 
+    const { theme } = useContext(ThemeContext)
+
     return (
-        <nav className='border border-b-1 border-b-indigo-600'>
+        <nav className={`border border-b-1 border-b-indigo-600 ${theme == 'dark' ? 'bg-blue-100' : 'bg-yellow-100'}`}>
             <ul className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
 
                 {/* left */}

@@ -64,6 +64,7 @@
       ]
     },
     {
+      "id": 6.5,
       "title": "asdfasdf",
       "description": "sdafasdf",
       "categories": [
@@ -90,6 +91,15 @@
         "php"
       ],
       "id": 8
+    },
+    {
+      "title": "latest book 2",
+      "description": "latest book 2 - description",
+      "categories": [
+        "latest",
+        "mybook"
+      ],
+      "id": 9
     }
   ]
 }

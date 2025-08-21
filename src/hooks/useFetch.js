@@ -28,7 +28,6 @@ function useFetch(url, method = 'GET') {
                     return res.json()
                 })
                 .then(data => {
-                    console.log(data)
                     setData(data)
                     setLoading(false)
                     setError(null)
