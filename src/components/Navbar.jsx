@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
-
+import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { ThemeContext } from '../contexts/ThemeContext';
+import useTheme from '../hooks/useTheme'
 
 
 export default function Navbar() {
@@ -13,7 +12,7 @@ export default function Navbar() {
         navigate(`/?q=${search}`)
     }
 
-    const { theme } = useContext(ThemeContext)
+    const { theme } = useTheme();
 
     return (
         <nav className={`border border-b-1 border-b-indigo-600 ${theme == 'dark' ? 'bg-blue-100' : 'bg-yellow-100'}`}>
