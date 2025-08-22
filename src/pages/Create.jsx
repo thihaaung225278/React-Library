@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useFetch from '../hooks/useFetch'
 import { useNavigate } from 'react-router-dom';
+import useTheme from '../hooks/useTheme';
 
 export default function Create() {
 
@@ -39,6 +40,7 @@ export default function Create() {
     }
   }, [book, navigate]);
 
+  let {isDark} = useTheme()
 
   return (
     <form className='w-150 mx-auto' onSubmit={(e) => e.preventDefault()}>
@@ -49,7 +51,7 @@ export default function Create() {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
             <div className="col-span-full">
-              <label htmlFor="street-address" className="block text-sm/6 font-medium text-gray-900">
+              <label htmlFor="street-address" className={`block text-sm/6 font-medium ${isDark ? `text-white`: `text-black`}`}>
                 Book Title
               </label>
               <div className="mt-2">
@@ -58,7 +60,7 @@ export default function Create() {
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="street-address" className="block text-sm/6 font-medium text-gray-900">
+              <label htmlFor="street-address" className={`block text-sm/6 font-medium ${isDark ? `text-white`: `text-black`}`}>
                 Book Description
               </label>
               <div className="mt-2">
@@ -67,7 +69,7 @@ export default function Create() {
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="street-address" className="block text-sm/6 font-medium text-gray-900">Category </label>
+              <label htmlFor="street-address" className={`block text-sm/6 font-mediu ${isDark ? `text-white`: `text-black`}`}>Category </label>
 
               <div className="mt-2 flex items-center gap-x-3">
                 <input onChange={(e => setNewCategory(e.target.value))} value={newCategory} id="street-address" type="text" name="street-address" autoComplete="street-address" className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
