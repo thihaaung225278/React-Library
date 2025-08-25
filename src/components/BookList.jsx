@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Book from '../components/Book'
 import useFetch from '../hooks/useFetch'
 import { createSearchParams, useLocation } from 'react-router-dom'
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+
 
 export default function BookList() {
 
@@ -9,7 +12,35 @@ export default function BookList() {
     let params = new URLSearchParams(location.search);
     let search = params.get('q')
 
-    let { data: books, loading, error } = useFetch(`http://localhost:3000/books${search ? `?q=${search}` : ""}`);
+    // let { data: books, loading, error } = useFetch(`http://localhost:3000/books${search ? `?q=${search}` : ""}`);
+
+    let [books, setBooks] = useState([])
+    let [error, setError] = useState('')
+    let [loading, setLoading] = useState(false)
+
+    // fetch data from firebase
+    useEffect(function () {
+        setLoading(true)
+        let ref = collection(db, 'books')
+        getDocs(ref)
+            .then(docs => {
+                if (docs.empty) {
+                    setError('No books found')
+                    setLoading(false)
+                } else {
+                    let books = []
+                    docs.forEach(doc => {
+                        let book = { id: doc.id, ...doc.data() }
+                        books.push(book)
+                    })
+                    setBooks(books)
+                    setLoading(false)
+                    setError('')
+                }
+
+            })
+
+    }, [])
 
     if (error) {
         return <p>{error}</p>
