@@ -25,7 +25,7 @@ export default function Layout() {
 
       {/* dynamic page data */}
       <div className={isDark ? `bg-black h-screen` : `bg-white h-screen`}>
-        <div className='max-w-6xl mx-auto p-3 animate-fade-in'>
+        <div className='max-w-6xl mx-auto animate-fade-in'>
           <Outlet />
         </div>
       </div>

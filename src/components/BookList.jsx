@@ -28,7 +28,7 @@ export default function BookList() {
     useEffect(function () {
         setLoading(true)
         let ref = collection(db, 'books')
-        let q = query(ref, query('date', 'desc'))
+        let q = query(ref, query('title', 'desc'))
         getDocs(q)
             .then(docs => {
                 if (docs.empty) {
