@@ -3,7 +3,7 @@ import Book from '../components/Book'
 import useFetch from '../hooks/useFetch'
 import { createSearchParams, useLocation } from 'react-router-dom'
 import { db } from '../firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 
 
 export default function BookList() {
@@ -22,7 +22,8 @@ export default function BookList() {
     useEffect(function () {
         setLoading(true)
         let ref = collection(db, 'books')
-        getDocs(ref)
+        let q = query(ref, query('date', 'desc'))
+        getDocs(q)
             .then(docs => {
                 if (docs.empty) {
                     setError('No books found')

@@ -20,17 +20,17 @@ export default function BookDetail() {
         setLoading(true)
         let ref = doc(db, 'books', id)
         getDoc(ref)
-        .then(b => {
-            if(b.exists()){
-                let book = {id: b.id, ...b.data()}
-                setBook(book)
-                setLoading(false)
-                setError('')
-            } else {
-                setError('Book not found')
-                setLoading(false)
-            }
-        })
+            .then(b => {
+                if (b.exists()) {
+                    let book = { id: b.id, ...b.data() }
+                    setBook(book)
+                    setLoading(false)
+                    setError('')
+                } else {
+                    setError('Book not found')
+                    setLoading(false)
+                }
+            })
     }, [id])
 
     let { isDark } = useTheme()
