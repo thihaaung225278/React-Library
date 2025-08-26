@@ -3,7 +3,7 @@ import Book from '../components/Book'
 import useFetch from '../hooks/useFetch'
 import { createSearchParams, useLocation } from 'react-router-dom'
 import { db } from '../firebase';
-import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
 
 
 export default function BookList() {
@@ -21,7 +21,6 @@ export default function BookList() {
     let deleteBook = async(id) => {
         let ref = doc(db, 'books', id)
         await deleteDoc(ref)
-        setBooks(prev => prev.filter( (b) => b.id !== id ))
     }
 
     // fetch data from firebase
@@ -29,23 +28,23 @@ export default function BookList() {
         setLoading(true)
         let ref = collection(db, 'books')
         let q = query(ref, query('title', 'desc'))
-        getDocs(q)
-            .then(docs => {
-                if (docs.empty) {
-                    setError('No books found')
-                    setLoading(false)
-                } else {
-                    let books = []
-                    docs.forEach(doc => {
-                        let book = { id: doc.id, ...doc.data() }
-                        books.push(book)
-                    })
-                    setBooks(books)
-                    setLoading(false)
-                    setError('')
-                }
+        
+        onSnapshot(q, docs => {
+            if (docs.empty) {
+                setError('No books found')
+                setLoading(false)
+            } else {
+                let books = []
+                docs.forEach(doc => {
+                    let book = { id: doc.id, ...doc.data() }
+                    books.push(book)
+                })
+                setBooks(books)
+                setLoading(false)
+                setError('')
+            }
 
-            })
+        })
 
     }, [])
 

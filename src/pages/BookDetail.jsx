@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import bookImage from '../assets/book.jpg'
 import useTheme from '../hooks/useTheme';
 import { db } from '../firebase'
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 export default function BookDetail() {
 
@@ -19,18 +19,17 @@ export default function BookDetail() {
     useEffect(function () {
         setLoading(true)
         let ref = doc(db, 'books', id)
-        getDoc(ref)
-            .then(b => {
-                if (b.exists()) {
-                    let book = { id: b.id, ...b.data() }
-                    setBook(book)
-                    setLoading(false)
-                    setError('')
-                } else {
-                    setError('Book not found')
-                    setLoading(false)
-                }
-            })
+        onSnapshot(ref, b => {
+            if (b.exists()) {
+                let book = { id: b.id, ...b.data() }
+                setBook(book)
+                setLoading(false)
+                setError('')
+            } else {
+                setError('Book not found')
+                setLoading(false)
+            }
+        })
     }, [id])
 
     let { isDark } = useTheme()
