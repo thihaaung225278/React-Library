@@ -3,7 +3,7 @@ import Book from '../components/Book'
 import useFetch from '../hooks/useFetch'
 import { createSearchParams, useLocation } from 'react-router-dom'
 import { db } from '../firebase';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
 
 
 export default function BookList() {
@@ -17,6 +17,12 @@ export default function BookList() {
     let [books, setBooks] = useState([])
     let [error, setError] = useState('')
     let [loading, setLoading] = useState(false)
+
+    let deleteBook = async(id) => {
+        let ref = doc(db, 'books', id)
+        await deleteDoc(ref)
+        setBooks(prev => prev.filter( (b) => b.id !== id ))
+    }
 
     // fetch data from firebase
     useEffect(function () {
@@ -53,9 +59,7 @@ export default function BookList() {
             {!!books && (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
                     {books.map((book) => (
-
-                        <Book book={book} key={book.id} />
-
+                        <Book book={book} key={book.id} deleteBook={deleteBook} />
                     ))}
                 </div>
             )}

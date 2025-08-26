@@ -15,9 +15,7 @@ export default function Navbar() {
     }
 
     const { isDark, changeTheme } = useTheme();
-
-    console.log(isDark)
-
+    
     return (
         <nav className={`border border-b-1 border-b-indigo-60 ${isDark ? `bg-black border-b-white`: `bg-white`}`}>
             <ul className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
